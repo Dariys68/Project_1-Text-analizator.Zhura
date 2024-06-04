@@ -1,9 +1,11 @@
+# discord: twitch_dariys68
 """
 projekt_1.py: první projekt do Engeto Online Python Akademie
 author: Dmytro Zhura
 email: zhura.dm@seznam.cz
 discord: twitch_dariys68
 """
+import re
 
 # Registrovaní uživatelé
 USERS = {
@@ -36,6 +38,9 @@ TEXTS = [
 def authenticate_user():
     """
     Funkce pro ověření uživatele.
+
+    Vraci:
+    bool: True pokud uziva
     """
     username = input("username: ")
     password = input("password: ")
