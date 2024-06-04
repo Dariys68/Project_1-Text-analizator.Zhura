@@ -16,7 +16,7 @@ USERS = {
 }
 
 # Texty k analýze
-TEXTS = [
+texts = [
     """Situated about 10 miles west of Kemmerer, Fossil Butte is a ruggedly impressive 
     topographic feature that rises sharply some 1000 feet above Twin Creek Valley to an 
     elevation of more than 7500 feet above sea level. The butte is located just north of 
@@ -40,13 +40,13 @@ def authenticate_user():
     Funkce pro ověření uživatele.
 
     Vraci:
-    bool: True pokud uziva
+    bool: True pokud je uzivatel autotentizovan, jinak False.
     """
     username = input("username: ")
     password = input("password: ")
     if username in USERS and USERS[username] == password:
         print("----------------------------------------")
-        print(f"Welcome to the app, {username}")
+        print(f"welcome to the app, {username}")
         return True
     else:
         print("unregistered user, terminating the program..")
@@ -55,24 +55,26 @@ def authenticate_user():
 def analyze_text(text):
     """
     Funkce pro analyzu textu.
+    parametry: str: text k analize
     """
-    word_count = len(text.split())
-    titlecase_count = sum(1 for word in text.split() if word.istitle())
-    uppercase_count = sum(1 for word in text.split() if word.isupper())
-    lowercase_count = sum(1 for word in text.split() if word.islower())
-    numbers = [int(word) for word in text.split() if word.isdigit()]
+    words = text.split()
+    word_count = len(words)
+    titlecase_count = sum(1 for word in words if word.istitle())
+    uppercase_count = sum(1 for word in words if word.isupper())
+    lowercase_count = sum(1 for word in words if word.islower())
+    numbers = [int(word) for word in words if word.isdigit()]
     sum_numbers = sum(numbers)
 
-    word_lengths = [len(word.strip('.,?!')) for word in text.split()]
+    word_lengths = [len(word.strip('.,?!')) for word in words]
     word_length_counts = {length: word_lengths.count(length) for length in set(word_lengths)}
     
     print("----------------------------------------")
-    print(f"There are {word_count} words in the selected text.")
-    print(f"There are {titlecase_count} titlecase words.")
-    print(f"There are {uppercase_count} uppercase words.")
-    print(f"There are {lowercase_count} lowercase words.")
-    print(f"There are {len(numbers)} numeric strings.")
-    print(f"The sum of all the numbers {sum_numbers}")
+    print(f"there are {word_count} words in the selected text.")
+    print(f"there are {titlecase_count} titlecase words.")
+    print(f"there are {uppercase_count} uppercase words.")
+    print(f"there are {lowercase_count} lowercase words.")
+    print(f"there are {len(numbers)} numeric strings.")
+    print(f"the sum of all the numbers {sum_numbers}")
 
     print("----------------------------------------")
     print("LEN|  OCCURENCES  |NR.")
@@ -85,18 +87,18 @@ def main():
     Hlavni funkce programu.
     """
     if authenticate_user():
-        print("We have 3 texts to be analyzed.")
+        print("we have 3 texts to be analyzed.")
         while True:
             try:
-                selection = int(input("Enter a number btw. 1 and 3 to select: "))
-                if selection < 1 or selection > 3:
-                    print("Invalid input. Please enter a number between 1 and 3.")
-                    continue
-                else:
-                    analyze_text(TEXTS[selection - 1])
+                selection = int(input("enter a number btw. 1 and {len(texts)} to select: "))
+                if 1 <= selection <= len(texts):
+                    analyze_text(texts[selection - 1])
                     break
+                else:
+                    print("invalid input. Please enter a number between 1 and {len(texts)}.")
+                    
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print("invalid input. Please enter a number.")
 
 if __name__ == "__main__":
     main()
