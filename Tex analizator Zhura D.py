@@ -59,11 +59,12 @@ def analyze_text(text):
     """
     words = text.split()
     word_count = len(words)
-    titlecase_count = sum(1 for word in words if word.istitle())
-    uppercase_count = sum(1 for word in words if word.isupper())
+    titlecase_count = sum(1 for word in words if word.istitle() and not word.isupper()) 
+    uppercase_count = sum(1 for word in words if word.isupper() and not any(char.isdigit() for char in word))
     lowercase_count = sum(1 for word in words if word.islower())
     numbers = [int(word) for word in words if word.isdigit()]
     sum_numbers = sum(numbers)
+    
 
     word_lengths = [len(word.strip('.,?!')) for word in words]
     word_length_counts = {length: word_lengths.count(length) for length in set(word_lengths)}
@@ -74,13 +75,13 @@ def analyze_text(text):
     print(f"there are {uppercase_count} uppercase words.")
     print(f"there are {lowercase_count} lowercase words.")
     print(f"there are {len(numbers)} numeric strings.")
-    print(f"the sum of all the numbers {sum_numbers}")
+    print(f"the sum of all the numbers is {sum_numbers}")
 
     print("----------------------------------------")
     print("LEN|  OCCURENCES  |NR.")
     print("----------------------------------------")
     for length, count in sorted(word_length_counts.items()):
-        print(f"{str(length).ljust(2)} | {'*' * count} | {count}")
+        print(f"{str(length).ljust(3)} | {'*' * count}{' ' * (12 - count)} | {count}")
 
 def main():
     """
@@ -90,12 +91,12 @@ def main():
         print("we have 3 texts to be analyzed.")
         while True:
             try:
-                selection = int(input("enter a number btw. 1 and {len(texts)} to select: "))
+                selection = int(input(f"enter a number btw. 1 and {len(texts)} to select: "))
                 if 1 <= selection <= len(texts):
                     analyze_text(texts[selection - 1])
                     break
                 else:
-                    print("invalid input. Please enter a number between 1 and {len(texts)}.")
+                    print(f"invalid input. Please enter a number between 1 and {len(texts)}.")
                     
             except ValueError:
                 print("invalid input. Please enter a number.")
