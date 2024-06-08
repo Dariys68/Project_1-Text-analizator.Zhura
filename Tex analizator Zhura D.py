@@ -36,9 +36,7 @@ texts = [
 ]
 
 def authenticate_user():
-    """
-    Funkce pro ověření uživatele.
-
+    """Funkce pro ověření uživatele.
     Vraci:
     bool: True pokud je uzivatel autotentizovan, jinak False.
     """
@@ -76,7 +74,6 @@ def analyze_text(text):
     print(f"there are {lowercase_count} lowercase words.")
     print(f"there are {len(numbers)} numeric strings.")
     print(f"the sum of all the numbers is {sum_numbers}")
-
     print("----------------------------------------")
     print("LEN|  OCCURENCES  |NR.")
     print("----------------------------------------")
