@@ -6,7 +6,6 @@ email: zhura.dm@seznam.cz
 discord: twitch_dariys68
 """
 import re
-
 # Registrovaní uživatelé
 USERS = {
     'bob': '123',
@@ -55,9 +54,9 @@ def analyze_text(text):
     Funkce pro analyzu textu.
     parametry: str: text k analize
     """
-    words = text.split()
+    words = re.findall(r'\b\w+\b', text) 
     word_count = len(words)
-    titlecase_count = sum(1 for word in words if word.istitle() and not word.isupper()) 
+    titlecase_count = sum(1 for word in words if word.istitle()) 
     uppercase_count = sum(1 for word in words if word.isupper() and not any(char.isdigit() for char in word))
     lowercase_count = sum(1 for word in words if word.islower())
     numbers = [int(word) for word in words if word.isdigit()]
@@ -66,7 +65,7 @@ def analyze_text(text):
 
     word_lengths = [len(word.strip('.,?!')) for word in words]
     word_length_counts = {length: word_lengths.count(length) for length in set(word_lengths)}
-    
+
     print("----------------------------------------")
     print(f"there are {word_count} words in the selected text.")
     print(f"there are {titlecase_count} titlecase words.")
