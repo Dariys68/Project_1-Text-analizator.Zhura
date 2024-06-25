@@ -49,6 +49,10 @@ def authenticate_user():
         print("unregistered user, terminating the program..")
         return False
 
+# Zkontroluje slovo jestli slovo je ve formatu titlecase
+def is_titlecase(word):
+    return word[0].isupper() and (word[1:].islower() or word [1:].isupper())
+
 def analyze_text(text):
     """
     Funkce pro analyzu textu.
@@ -56,7 +60,7 @@ def analyze_text(text):
     """
     words = re.findall(r'\b\w+\b', text) 
     word_count = len(words)
-    titlecase_count = sum(1 for word in words if word.istitle()) 
+    titlecase_count = sum(1 for word in words if is_titlecase(word)) 
     uppercase_count = sum(1 for word in words if word.isupper() and not any(char.isdigit() for char in word))
     lowercase_count = sum(1 for word in words if word.islower())
     numbers = [int(word) for word in words if word.isdigit()]
